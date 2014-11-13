@@ -28,16 +28,10 @@ return [
         'secret' => '',
     ],
 
-    'github' => [
-        'client_id'     => 'e1202fe34826caf60dfd',
-        'client_secret' => '0ac56f9f509372074cbdd526aa2a9c1af7597509',
-        'redirect'      => 'http://socialite.tokenly.dev:8035/login'
-    ],
-
     'tokenly' => [
-        'client_id'     => 'lusULPFd8OiqTfCY',
-        'client_secret' => 'QZVxkFW9dL5ucKuQnYFZW5KewhmjBVMe',
-        'redirect'      => 'http://socialite.tokenly.dev:8035/login'
+        'client_id'     => getenv('TOKENLY_AUTH_CLIENT_ID'),
+        'client_secret' => getenv('TOKENLY_AUTH_CLIENT_SECRET'),
+        'redirect'      => getenv('TOKENLY_AUTH_REDIRECT'),
     ],
 
 ];
