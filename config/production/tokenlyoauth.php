@@ -2,6 +2,6 @@
 
 return [
 
-    'urlbase'  => genv('TOKENLYOAUTH_URL_BASE') ?: 'http://accounts.tokenly.co',
+    'urlbase'  => getenv('TOKENLYOAUTH_URL_BASE') ?: 'http://accounts.tokenly.co',
 
 ];
