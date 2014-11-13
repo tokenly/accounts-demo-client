@@ -9,7 +9,7 @@ return [
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => 'mariadb',
-			'database'  => 'tokenly_socialite_production',
+			'database'  => 'tokenly_socialite_prod',
             'username'  => getenv('DB_USERNAME') ?: 'root',
             'password'  => getenv('DB_PASSWORD') ?: '',
             'charset'   => 'utf8',
