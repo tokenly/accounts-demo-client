@@ -2,6 +2,7 @@
 
 namespace App\OAuthProviders;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
@@ -23,7 +24,7 @@ class TokenlyProvider extends AbstractProvider implements ProviderInterface {
     protected function getAuthUrl($state)
     {
         // return $this->buildAuthUrlFromBase('https://github.com/login/oauth/authorize', $state);
-        return $this->buildAuthUrlFromBase('http://accounts.tokenly.dev:8034/oauth/authorize', $state);
+        return $this->buildAuthUrlFromBase(Config::get('tokenlyoauth.urlbase').'/oauth/authorize', $state);
     }
 
     public function getAccessToken($code)
@@ -62,7 +63,7 @@ class TokenlyProvider extends AbstractProvider implements ProviderInterface {
     protected function getTokenUrl()
     {
         // return 'https://github.com/login/oauth/access_token';
-        return 'http://accounts.tokenly.dev:8034/oauth/access-token';
+        return Config::get('tokenlyoauth.urlbase').'/oauth/access-token';
     }
 
     /**
@@ -70,7 +71,7 @@ class TokenlyProvider extends AbstractProvider implements ProviderInterface {
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('http://accounts.tokenly.dev:8034/oauth/user?access_token='.$token, [
+        $response = $this->getHttpClient()->get(Config::get('tokenlyoauth.urlbase').'/oauth/user?access_token='.$token, [
             'headers' => [
                 'Accept' => 'application/vnd.github.v3+json',
             ],
