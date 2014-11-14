@@ -4,6 +4,7 @@ use App\AuthenticateUser;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class OAuthController extends Controller {
 
@@ -14,7 +15,15 @@ class OAuthController extends Controller {
      */
     public function login(AuthenticateUser $authenticateUser, Request $request) {
         // authenticate the user
-        return $authenticateUser->execute($request->has('code'), $this);
+        try {
+            return $authenticateUser->execute($request->has('code'), $this);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            if (!strlen($message) AND $e instanceof InvalidStateException) {
+                $message = 'This authentication request was not valid or has expired. Please try again.';
+            }
+            return view('error', ['error' => $message]);
+        }
         
         // return \Socialite::with('github')->redirect();
     }
