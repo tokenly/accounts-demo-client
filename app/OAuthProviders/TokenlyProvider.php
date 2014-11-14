@@ -31,6 +31,8 @@ class TokenlyProvider extends AbstractProvider implements ProviderInterface {
     {
         Log::info('code='.$code);
         Log::info('tokenFields='.json_encode($this->getTokenFields($code), 192));
+        Log::info('foo');
+        Log::info('getAccessToken tokenURL='.$this->getTokenUrl());
         return parent::getAccessToken($code);
 
         // $response = $this->getHttpClient()->post($this->getTokenUrl(), [
@@ -63,7 +65,7 @@ class TokenlyProvider extends AbstractProvider implements ProviderInterface {
     protected function getTokenUrl()
     {
         // return 'https://github.com/login/oauth/access_token';
-        return Config::get('tokenlyoauth.urlbase').'/oauth/access-token';
+        return Config::get('tokenlyoauth.internal_urlbase').'/oauth/access-token';
     }
 
     /**
@@ -71,9 +73,10 @@ class TokenlyProvider extends AbstractProvider implements ProviderInterface {
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get(Config::get('tokenlyoauth.urlbase').'/oauth/user?access_token='.$token, [
+        Log::info('getUserByToken: calling '.Config::get('tokenlyoauth.internal_urlbase').'/oauth/user?access_token='.$token);
+        $response = $this->getHttpClient()->get(Config::get('tokenlyoauth.internal_urlbase').'/oauth/user?access_token='.$token, [
             'headers' => [
-                'Accept' => 'application/vnd.github.v3+json',
+                'Accept' => 'application/json',
             ],
         ]);
 
